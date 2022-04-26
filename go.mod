@@ -1,4 +1,4 @@
-module github.com/SpectatorNan/goi18nx
+module github.com/SpectatorNan/go-zero-i18n
 
 go 1.16
 
