@@ -23,9 +23,8 @@ func getLocalizer(ctx context.Context) (*i18n2.Localizer, bool) {
 
 func withRequest(r *http.Request, bundle *i18n2.Bundle) *http.Request {
 
-	lang := r.FormValue("lang")
-	accept := r.Header.Get("Accept-Language")
-	localizer := i18n2.NewLocalizer(bundle, lang, accept)
+	accept := r.Header.Get(defaultLangHeaderKey)
+	localizer := i18n2.NewLocalizer(bundle, accept)
 	return r.WithContext(setLocalizer(r.Context(), localizer))
 }
 

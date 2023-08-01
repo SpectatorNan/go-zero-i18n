@@ -1,24 +1,26 @@
 package goi18nx
 
 import (
-	i18n2 "github.com/nicksnyder/go-i18n/v2/i18n"
+	"golang.org/x/text/language"
 	"net/http"
 )
 
-const I18nKey = "SpectatorNan/goi18nx"
-
 type I18nMiddleware struct {
-	bundle *i18n2.Bundle
+	fetchTag func(r *http.Request) language.Tag
+	configs  []string
 }
 
-func NewI18nMiddleware(bundle *i18n2.Bundle) *I18nMiddleware {
+func NewI18nMiddleware(fetchTag func(r *http.Request) language.Tag, configs ...string) *I18nMiddleware {
 	return &I18nMiddleware{
-		bundle: bundle,
+		fetchTag: fetchTag,
+		configs:  configs,
 	}
 }
 
 func (m *I18nMiddleware) Handle(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		next(w, withRequest(r, m.bundle))
+		tag := m.fetchTag(r)
+		bundle := NewBundle(tag, m.configs...)
+		next(w, withRequest(r, bundle))
 	}
 }
