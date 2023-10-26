@@ -37,3 +37,4 @@ func formatInternalMessage(message *i18n2.Message, args map[string]interface{}) 
 	}
 	return msg
 }
+
