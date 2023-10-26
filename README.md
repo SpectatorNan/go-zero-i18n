@@ -1,8 +1,10 @@
 # goi18nx
  
 ## Usage
+
+### Interceptor
  
-### Go zero api server
+#### Go zero api server
  
 ```shell
 ```go
@@ -27,7 +29,7 @@ import "github.com/SpectatorNan/go-zero-i18n/goi18nx"
 
 ```
 
-### Go zero rpc server
+#### Go zero rpc server
  
 ```go
 import "github.com/SpectatorNan/go-zero-i18n/goi18nx"
@@ -42,4 +44,20 @@ import "github.com/SpectatorNan/go-zero-i18n/goi18nx"
 	
     ......
 	
+```
+
+#### Format string
+
+```go
+
+    // check context has i18n translator
+    goi18nx.IsHasI18n(ctx)
+
+    // context.Context
+	// msgKey: localization string's key
+	// defaultMsg: default string (if not found in localization file)
+    goi18nx.FormatText(ctx, serr.MsgKey, serr.DefaultMsg)
+
+    
+    
 ```
