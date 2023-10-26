@@ -2,6 +2,9 @@
  
 ## Usage
  
+### Go zero api server
+ 
+```shell
 ```go
 
 import "github.com/SpectatorNan/go-zero-i18n/goi18nx"
@@ -15,15 +18,28 @@ import "github.com/SpectatorNan/go-zero-i18n/goi18nx"
  
     // LocalizationFiles is a slice of toml files path
 	// register i18n
-	server.Use(goi18nx.NewI18nMiddleware(func(r *http.Request) language.Tag {
-        tags := []language.Tag{
-            language.English,
-            language.Chinese,
-        }
-        accept := r.Header.Get("Accept-Language")
-        return localizationx.FetchCurrentLanguageTag(accept, tags)
-	}, []string{".../active.en.toml",".../active.zh.toml"}...).Handle)
+	server.Use(goi18nx.NewI18nMiddleware([]language.Tag{
+        language.English,
+        language.Chinese,
+    }, []string{".../active.en.toml",".../active.zh.toml"}).Handle)
 	
 	......
 
+```
+
+### Go zero rpc server
+ 
+```go
+import "github.com/SpectatorNan/go-zero-i18n/goi18nx"
+
+    ......
+
+    i18n := goi18nx.NewI18nGrpcInterceptor([]language.Tag{
+            language.English,
+            language.Chinese,
+        }, c.LocalizationFiles)
+    s.AddUnaryInterceptors(i18n.Interceptor)
+	
+    ......
+	
 ```

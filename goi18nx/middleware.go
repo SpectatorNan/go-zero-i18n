@@ -6,21 +6,22 @@ import (
 )
 
 type I18nMiddleware struct {
-	fetchTag func(r *http.Request) language.Tag
-	configs  []string
+	supportTags       []language.Tag
+	localizationFiles []string
 }
 
-func NewI18nMiddleware(fetchTag func(r *http.Request) language.Tag, configs ...string) *I18nMiddleware {
+func NewI18nMiddleware(supportTags []language.Tag, localizationFiles []string) *I18nMiddleware {
 	return &I18nMiddleware{
-		fetchTag: fetchTag,
-		configs:  configs,
+		supportTags:       supportTags,
+		localizationFiles: localizationFiles,
 	}
 }
 
 func (m *I18nMiddleware) Handle(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		tag := m.fetchTag(r)
-		bundle := NewBundle(tag, m.configs...)
+		lang := r.Header.Get(defaultLangHeaderKey)
+		langTag := FetchCurrentLanguageTag(lang, m.supportTags)
+		bundle := NewBundle(langTag, m.localizationFiles...)
 		next(w, withRequest(r, bundle))
 	}
 }
