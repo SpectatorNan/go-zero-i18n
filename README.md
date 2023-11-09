@@ -6,7 +6,7 @@
  
 #### Go zero api server
  
-```shell
+
 ```go
 
 import "github.com/SpectatorNan/go-zero-i18n/goi18nx"

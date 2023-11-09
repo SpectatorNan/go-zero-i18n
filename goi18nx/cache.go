@@ -27,8 +27,7 @@ func withRequest(r *http.Request, bundle *i18n2.Bundle) *http.Request {
 	accept := r.Header.Get(defaultLangHeaderKey)
 	localizer := i18n2.NewLocalizer(bundle, accept)
 	ctx := setLocalizer(r.Context(), localizer)
-	md := metadata.New(map[string]string{defaultLangHeaderKey: accept})
-	ctx = metadata.NewOutgoingContext(ctx, md)
+	ctx = metadata.AppendToOutgoingContext(ctx, defaultLangHeaderKey, accept)
 	return r.WithContext(ctx)
 }
 
