@@ -3,6 +3,7 @@ package goi18nx
 import (
 	"context"
 	i18n2 "github.com/nicksnyder/go-i18n/v2/i18n"
+	"golang.org/x/text/language"
 )
 
 func FormatText(ctx context.Context, msgId string, defaultText string) string {
@@ -38,3 +39,10 @@ func formatInternalMessage(message *i18n2.Message, args map[string]interface{}) 
 	return msg
 }
 
+func FetchCurrentLanguageFromCtx(ctx context.Context) (*language.Tag, bool) {
+	v := ctx.Value(I18nCurrentLangKey)
+	if l, b := v.(language.Tag); b {
+		return &l, true
+	}
+	return nil, false
+}

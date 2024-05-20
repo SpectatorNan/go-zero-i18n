@@ -20,8 +20,8 @@ func NewI18nMiddleware(supportTags []language.Tag, localizationFiles []string) *
 func (m *I18nMiddleware) Handle(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		lang := r.Header.Get(defaultLangHeaderKey)
-		langTag := FetchCurrentLanguageTag(lang, m.supportTags)
+		langTag := MatchCurrentLanguageTag(lang, m.supportTags)
 		bundle := NewBundle(langTag, m.localizationFiles...)
-		next(w, withRequest(r, bundle))
+		next(w, withRequest(r, langTag, bundle))
 	}
 }

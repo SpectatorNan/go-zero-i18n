@@ -3,6 +3,7 @@ package goi18nx
 import (
 	"context"
 	i18n2 "github.com/nicksnyder/go-i18n/v2/i18n"
+	"golang.org/x/text/language"
 	"google.golang.org/grpc/metadata"
 	"net/http"
 )
@@ -22,13 +23,18 @@ func getLocalizer(ctx context.Context) (*i18n2.Localizer, bool) {
 	return nil, false
 }
 
-func withRequest(r *http.Request, bundle *i18n2.Bundle) *http.Request {
+func withRequest(r *http.Request, currentLang language.Tag, bundle *i18n2.Bundle) *http.Request {
 
 	accept := r.Header.Get(defaultLangHeaderKey)
 	localizer := i18n2.NewLocalizer(bundle, accept)
 	ctx := setLocalizer(r.Context(), localizer)
+	ctx = setCurrentLang(ctx, currentLang)
 	ctx = metadata.AppendToOutgoingContext(ctx, defaultLangHeaderKey, accept)
 	return r.WithContext(ctx)
+}
+
+func setCurrentLang(ctx context.Context, currentLang language.Tag) context.Context {
+	return context.WithValue(ctx, I18nCurrentLangKey, currentLang)
 }
 
 func setLocalizer(ctx context.Context, l *i18n2.Localizer) context.Context {

@@ -40,7 +40,7 @@ func (i *I18nGrpcInterceptor) saveLocalize(ctx context.Context) (context.Context
 		return nil, status.Error(codes.Code(defaultErrCode), "can not correct get language")
 	}
 	lang := langs[0]
-	langTag := FetchCurrentLanguageTag(lang, i.supportTags)
+	langTag := MatchCurrentLanguageTag(lang, i.supportTags)
 	bundle := NewBundle(langTag, i.localizationFiles...)
 	localizer := i18n2.NewLocalizer(bundle, lang)
 	return setLocalizer(ctx, localizer), nil

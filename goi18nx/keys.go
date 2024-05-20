@@ -1,6 +1,7 @@
 package goi18nx
 
 const I18nKey = "SpectatorNan/goi18nx"
+const I18nCurrentLangKey = "SpectatorNan/goi18nx/currentLang"
 
 var (
 	defaultLangHeaderKey        = "Accept-Language"
