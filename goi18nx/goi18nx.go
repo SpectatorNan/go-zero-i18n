@@ -46,3 +46,15 @@ func FetchCurrentLanguageFromCtx(ctx context.Context) (*language.Tag, bool) {
 	}
 	return nil, false
 }
+
+func LocalizedString(ctx context.Context, defaultValue string, langMap map[language.Tag]string) string {
+	langTag, tagExists := FetchCurrentLanguageFromCtx(ctx)
+	if !tagExists {
+		return defaultValue
+	}
+	str, ok := langMap[*langTag]
+	if !ok {
+		return defaultValue
+	}
+	return str
+}

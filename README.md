@@ -61,3 +61,17 @@ import "github.com/SpectatorNan/go-zero-i18n/goi18nx"
     
     
 ```
+
+### Support From DB
+```go
+// Shop is a struct from db
+func (s *Shop) Name(ctx context.Context) string {
+	langMap := map[language.Tag]string{
+		language.English: s.NameEn,
+		language.Chinese: s.NameCn,
+		// more language mapping
+	}
+	return goi18nx.LocalizedString(ctx, s.NameCn, langMap)
+}
+
+```
