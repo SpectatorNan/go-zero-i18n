@@ -43,5 +43,9 @@ func (i *I18nGrpcInterceptor) saveLocalize(ctx context.Context) (context.Context
 	langTag := MatchCurrentLanguageTag(lang, i.supportTags)
 	bundle := NewBundle(langTag, i.localizationFiles...)
 	localizer := i18n2.NewLocalizer(bundle, lang)
-	return setLocalizer(ctx, localizer), nil
+	ctx = setLocalizer(ctx, localizer)
+
+	// Append the language metadata to the outgoing context
+	ctx = metadata.AppendToOutgoingContext(ctx, defaultLangHeaderKey, lang)
+	return ctx, nil
 }
