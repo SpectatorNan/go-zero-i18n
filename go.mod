@@ -5,7 +5,7 @@ go 1.21
 require (
 	github.com/BurntSushi/toml v1.4.0
 	github.com/nicksnyder/go-i18n/v2 v2.4.0
-	golang.org/x/text v0.18.0
+	golang.org/x/text v0.19.0
 	google.golang.org/grpc v1.65.0
 )
 
