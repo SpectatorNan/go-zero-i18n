@@ -1,13 +1,11 @@
 module github.com/SpectatorNan/go-zero-i18n
 
-go 1.24.0
-
-toolchain go1.24.1
+go 1.25.0
 
 require (
 	github.com/BurntSushi/toml v1.6.0
 	github.com/nicksnyder/go-i18n/v2 v2.6.1
-	golang.org/x/text v0.34.0
+	golang.org/x/text v0.38.0
 	google.golang.org/grpc v1.67.1
 )
 
